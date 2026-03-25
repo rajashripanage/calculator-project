@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 🔥 NEW BACKGROUND */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.calculator {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+  width: 280px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* ✅ BOLD INPUT */
+#display {
+  width: 100%;
+  height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: right;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  background: white;
+}
+
+/* Buttons */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button {
+  height: 45px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f1f1f1;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+.equal {
+  background: #4CAF50;
+  color: white;
+}
+
+.clear {
+  background: #f44336;
+  color: white;
+}
+
+/* Date Time */
+.datetime-bar {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+  <h2>Calculator</h2>
+
+  <input type="text" id="display" disabled>
+
+  <div class="buttons">
+    <button class="clear" onclick="clearDisplay()">C</button>
+    <button onclick="deleteLast()">←</button>
+    <button onclick="appendValue('/')">/</button>
+    <button onclick="appendValue('*')">*</button>
+
+    <button onclick="appendValue('7')">7</button>
+    <button onclick="appendValue('8')">8</button>
+    <button onclick="appendValue('9')">9</button>
+    <button onclick="appendValue('-')">-</button>
+
+    <button onclick="appendValue('4')">4</button>
+    <button onclick="appendValue('5')">5</button>
+    <button onclick="appendValue('6')">6</button>
+    <button onclick="appendValue('+')">+</button>
+
+    <button onclick="appendValue('1')">1</button>
+    <button onclick="appendValue('2')">2</button>
+    <button onclick="appendValue('3')">3</button>
+    <button class="equal" onclick="calculate()">=</button>
+
+    <button onclick="appendValue('0')">0</button>
+    <button onclick="appendValue('.')">.</button>
+  </div>
+
+  <!-- Date Time -->
+  <div class="datetime-bar">
+    <span id="date"></span>
+    <span id="time"></span>
+  </div>
+</div>
+
+<script>
+// Calculator Functions
+function appendValue(value) {
+  document.getElementById("display").value += value;
+}
+
+function clearDisplay() {
+  document.getElementById("display").value = "";
+}
+
+function deleteLast() {
+  let current = document.getElementById("display").value;
+  document.getElementById("display").value = current.slice(0, -1);
+}
+
+function calculate() {
+  try {
+    let result = eval(document.getElementById("display").value);
+    document.getElementById("display").value = result;
+  } catch {
+    alert("Invalid Input");
+  }
+}
+
+// Date Time
+function updateDateTime() {
+  let now = new Date();
+  document.getElementById("date").innerText = now.toLocaleDateString();
+  document.getElementById("time").innerText = now.toLocaleTimeString();
+}
+
+setInterval(updateDateTime, 1000);
+updateDateTime();
+</script>
+
+</body>
+</html>
